@@ -15,8 +15,7 @@ services:
     environment:
       NODE_RED_USERNAME: ${NODE_RED_USERNAME}
       NODE_RED_PASSWORD_HASH: ${NODE_RED_PASSWORD_HASH}
-      LD_LIBRARY_PATH: /opt/oracle/instantclient
-      TZ: America/Sao_Paulo
+      LD_LIBRARY_PATH: /usr/lib/oracle
 
     ports:
       - "1880:1880"
