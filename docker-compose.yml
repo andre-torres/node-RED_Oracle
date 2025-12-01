@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  node-red:
+    build: .
+    container_name: node-red
+    restart: unless-stopped
+
+    volumes:
+      - node_red_data:/data
+
+    env_file:
+      - .env
+
+    environment:
+      NODE_RED_USERNAME: ${NODE_RED_USERNAME}
+      NODE_RED_PASSWORD_HASH: ${NODE_RED_PASSWORD_HASH}
+      LD_LIBRARY_PATH: /opt/oracle/instantclient
+      TZ: America/Sao_Paulo
+
+    ports:
+      - "1880:1880"
+
+volumes:
+  node_red_data:
