@@ -19,19 +19,11 @@ RUN apk update
     #&& rm -rf /var/cache/apk/*
 
 # Copia os arquivos do Instant Client para a imagem.
-# CRIE UMA PASTA 'oracle_client' na mesma pasta deste Dockerfile
-# e coloque os arquivos zip do Instant Client 12 (basic e sdk) dentro dela.
-# Ex: oracle_client/instantclient-basic-linux.x64-12.2.0.1.0.zip
-# Ex: oracle_client/instantclient-sdk-linux.x64-12.2.0.1.0.zip
 RUN mkdir -p $ORACLE_HOME
-COPY oracle_client/instantclient-basic-linux.x64-12.2.0.1.0.zip /tmp/
-COPY oracle_client/instantclient-sdk-linux.x64-12.2.0.1.0.zip /tmp/
+COPY oracle_client_12_2/instantclient_12_2/ $ORACLE_HOME/
 
-# Descompacta os arquivos, limpa e configura links simbólicos
-RUN unzip /tmp/instantclient-basic-linux.x64-12.2.0.1.0.zip -d /opt/oracle && \
-    unzip /tmp/instantclient-sdk-linux.x64-12.2.0.1.0.zip -d /opt/oracle && \
-    rm /tmp/*.zip && \
-    ln -s $ORACLE_HOME/libclntsh.so.* $ORACLE_HOME/libclntsh.so && \
+# Configura links simbólicos (necessário para o node-oracledb encontrar as bibliotecas)
+RUN ln -s $ORACLE_HOME/libclntsh.so.* $ORACLE_HOME/libclntsh.so && \
     ln -s $ORACLE_HOME/libocci.so.* $ORACLE_HOME/libocci.so
 
 # --- Etapa 2: Instalação do Nó Oracle (Exemplo) ---
