@@ -12,11 +12,7 @@ ENV TNS_ADMIN=/usr/src/node-red/data
 # --- Etapa 1: Instalação das dependências e Instant Client ---
 
 # Instala pacotes necessários (ajuste para a sua base, aqui assumimos Debian/Ubuntu)
-RUN apk update && \
-    apk add --no-cache \
-    libaio \
-    unzip \
-    build-base
+RUN apt-get update
     # Remove a limpeza de cache explícita com 'rm -rf' 
     # e confia no '--no-cache' do 'apk add' para evitar problemas de permissão
     # no processo de build.
