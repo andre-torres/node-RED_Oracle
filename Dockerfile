@@ -20,7 +20,7 @@ RUN apk update
 
 # Copia os arquivos do Instant Client para a imagem.
 RUN mkdir -p $ORACLE_HOME
-COPY oracle_client_12_2/instantclient_12_2/ $ORACLE_HOME/
+COPY oracle_client/instantclient_12_2/ $ORACLE_HOME/
 
 # Configura links simbólicos (necessário para o node-oracledb encontrar as bibliotecas)
 RUN ln -s $ORACLE_HOME/libclntsh.so.* $ORACLE_HOME/libclntsh.so && \
