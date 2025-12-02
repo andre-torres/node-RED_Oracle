@@ -16,7 +16,7 @@ RUN apk update && \
     apk add --no-cache \
     libaio \
     unzip \
-    build-base \
+    build-base
     # Remove a limpeza de cache explícita com 'rm -rf' 
     # e confia no '--no-cache' do 'apk add' para evitar problemas de permissão
     # no processo de build.
