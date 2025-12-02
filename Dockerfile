@@ -1,29 +1,49 @@
-FROM oraclelinux:8
+# Usa a imagem oficial do Node-RED baseada em Node.js (Alpine ou Debian, dependendo da versão)
+FROM nodered/node-red:latest-18
 
-# Dependências base
-RUN dnf -y install oracle-nodejs-release-el8 \
-    && dnf -y module enable nodejs:18 \
-    && dnf -y install nodejs \
-    && dnf -y install oracle-instantclient-release-el8 \
-    && dnf -y install oracle-instantclient-basiclight \
-    #&& dnf -y install ca-certificates \
-    && dnf clean all
+# Define o diretório de trabalho
+WORKDIR /usr/src/node-red
 
-# Copia os certificados da SAP
-#COPY sap-root.crt /etc/pki/ca-trust/source/anchors/
-#COPY sap-intermediate.crt /etc/pki/ca-trust/source/anchors/
+# Variáveis de ambiente para o Oracle Instant Client
+ENV ORACLE_HOME=/opt/oracle/instantclient_12_2
+ENV LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+ENV TNS_ADMIN=/usr/src/node-red/data
 
-# Atualiza o truststore Linux
-#RUN update-ca-trust extract
+# --- Etapa 1: Instalação das dependências e Instant Client ---
 
-# Node-RED e driver Oracle
-RUN npm install -g --unsafe-perm node-red oracledb
+# Instala pacotes necessários (ajuste para a sua base, aqui assumimos Debian/Ubuntu)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libaio1 \
+    unzip \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Usuário não-root
-RUN useradd -m node-red
+# Copia os arquivos do Instant Client para a imagem.
+# CRIE UMA PASTA 'oracle_client' na mesma pasta deste Dockerfile
+# e coloque os arquivos zip do Instant Client 12 (basic e sdk) dentro dela.
+# Ex: oracle_client/instantclient-basic-linux.x64-12.2.0.1.0.zip
+# Ex: oracle_client/instantclient-sdk-linux.x64-12.2.0.1.0.zip
+RUN mkdir -p $ORACLE_HOME
+COPY oracle_client/instantclient-basic-linux.x64-12.2.0.1.0.zip /tmp/
+COPY oracle_client/instantclient-sdk-linux.x64-12.2.0.1.0.zip /tmp/
+
+# Descompacta os arquivos, limpa e configura links simbólicos
+RUN unzip /tmp/instantclient-basic-linux.x64-12.2.0.1.0.zip -d /opt/oracle && \
+    unzip /tmp/instantclient-sdk-linux.x64-12.2.0.1.0.zip -d /opt/oracle && \
+    rm /tmp/*.zip && \
+    ln -s $ORACLE_HOME/libclntsh.so.* $ORACLE_HOME/libclntsh.so && \
+    ln -s $ORACLE_HOME/libocci.so.* $ORACLE_HOME/libocci.so
+
+# --- Etapa 2: Instalação do Nó Oracle (Exemplo) ---
+
+# Instala o nó node-oracledb, que usará o Instant Client instalado
+# Nota: Você pode precisar instalar outros nós Oracle, como node-red-contrib-oracledb
+RUN npm install node-oracledb --unsafe-perm
+
+# Limpa o cache npm
+RUN npm cache clean --force
+
+# Define o usuário padrão e o comando de inicialização do Node-RED
 USER node-red
-
-WORKDIR /home/node-red
-
-EXPOSE 1880
-CMD ["node-red", "--userDir", "/data"]
+CMD ["npm", "start"]
