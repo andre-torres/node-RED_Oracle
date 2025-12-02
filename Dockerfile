@@ -20,7 +20,7 @@ RUN apk update && \
     # Remove a limpeza de cache explícita com 'rm -rf' 
     # e confia no '--no-cache' do 'apk add' para evitar problemas de permissão
     # no processo de build.
-    && rm -rf /var/cache/apk/*
+    #&& rm -rf /var/cache/apk/*
 
 # Copia os arquivos do Instant Client para a imagem.
 # CRIE UMA PASTA 'oracle_client' na mesma pasta deste Dockerfile
