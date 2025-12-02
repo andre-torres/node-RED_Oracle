@@ -6,7 +6,7 @@ RUN dnf -y install oracle-nodejs-release-el8 \
     && dnf -y install nodejs \
     && dnf -y install oracle-instantclient-release-el8 \
     && dnf -y install oracle-instantclient-basiclight \
-    && dnf -y install ca-certificates \
+    #&& dnf -y install ca-certificates \
     && dnf clean all
 
 # Copia os certificados da SAP
