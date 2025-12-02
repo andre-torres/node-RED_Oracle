@@ -17,8 +17,9 @@ RUN apk update && \
     libaio \
     unzip \
     build-base \
-    # Instalação de utilitários de rede se necessário
-    # Adicione 'udev' ou 'libnsl' se o Instant Client reclamar de bibliotecas ausentes
+    # Remove a limpeza de cache explícita com 'rm -rf' 
+    # e confia no '--no-cache' do 'apk add' para evitar problemas de permissão
+    # no processo de build.
     && rm -rf /var/cache/apk/*
 
 # Copia os arquivos do Instant Client para a imagem.
