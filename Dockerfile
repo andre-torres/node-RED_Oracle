@@ -12,12 +12,14 @@ ENV TNS_ADMIN=/usr/src/node-red/data
 # --- Etapa 1: Instalação das dependências e Instant Client ---
 
 # Instala pacotes necessários (ajuste para a sua base, aqui assumimos Debian/Ubuntu)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libaio1 \
+RUN apk update && \
+    apk add --no-cache \
+    libaio \
     unzip \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    build-base \
+    # Instalação de utilitários de rede se necessário
+    # Adicione 'udev' ou 'libnsl' se o Instant Client reclamar de bibliotecas ausentes
+    && rm -rf /var/cache/apk/*
 
 # Copia os arquivos do Instant Client para a imagem.
 # CRIE UMA PASTA 'oracle_client' na mesma pasta deste Dockerfile
