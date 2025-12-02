@@ -10,11 +10,11 @@ RUN dnf -y install oracle-nodejs-release-el8 \
     && dnf clean all
 
 # Copia os certificados da SAP
-COPY sap-root.crt /etc/pki/ca-trust/source/anchors/
-COPY sap-intermediate.crt /etc/pki/ca-trust/source/anchors/
+#COPY sap-root.crt /etc/pki/ca-trust/source/anchors/
+#COPY sap-intermediate.crt /etc/pki/ca-trust/source/anchors/
 
 # Atualiza o truststore Linux
-RUN update-ca-trust extract
+#RUN update-ca-trust extract
 
 # Node-RED e driver Oracle
 RUN npm install -g --unsafe-perm node-red oracledb
