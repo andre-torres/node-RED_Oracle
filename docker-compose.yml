@@ -1,20 +1,28 @@
 version: '3.8'
 
 services:
-  node-red-oracle:
-    # Usa o Dockerfile que acabamos de criar, na pasta atual (.)
-    build: .
-    image: node-red-oracle:latest
-    container_name: node-red-oracle
-    restart: unless-stopped
+  node-red:
+    # Coolify usará o Dockerfile na mesma pasta para construir a imagem
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Nome do container (opcional, mas útil)
+    container_name: node-red
+    
+    # Mapeia a porta padrão do Node-RED para uma porta no host
+    # Se você usar o Coolify, ele gerenciará a porta externa e o proxy reverso.
+    # Esta porta 1880 deve ser exposta no Coolify.
     ports:
-      # Mapeia a porta do Node-RED
       - "1880:1880"
+      
+    # Mapeia o volume /data para persistir fluxos, configurações e módulos instalados
     volumes:
-      # Mapeamento do volume de dados para persistência do Node-RED
-      - ./data:/data
-    environment:
-      # Define a timezone para o container (opcional)
-      - TZ=America/Sao_Paulo
-      # Variáveis do Node-RED
-      - FLOWS=flows.json
+      - node-red-data:/data
+      
+    # Reinicia o container automaticamente em caso de falha
+    restart: unless-stopped
+
+# Define o volume persistente
+volumes:
+  node-red-data:
