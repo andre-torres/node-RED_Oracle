@@ -1,7 +1,7 @@
 
 FROM nodered/node-red:latest
 
-USER node-red
+USER root
 
 RUN npm install
 RUN npm install async
