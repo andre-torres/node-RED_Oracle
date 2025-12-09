@@ -36,7 +36,7 @@ COPY --from=builder /data/package.json /data/package.json
 
 # Se você tem seus fluxos e configurações, copie-os aqui
 # Certifique-se de que seus arquivos .json de fluxo estão no diretório /data
-COPY settings.js flows.json /data/
+# COPY settings.js flows.json /data/
 
 # Define o ponto de entrada (já está definido na imagem base, mas é bom manter)
 CMD ["npm", "start", "--", "--userDir", "/data"]
