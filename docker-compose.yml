@@ -1,28 +1,17 @@
-version: '3.8'
-
+version: '3.7'
 services:
   node-red:
-    # Coolify usará o Dockerfile na mesma pasta para construir a imagem
-    build:
-      context: .
-      dockerfile: Dockerfile
-    
-    # Nome do container (opcional, mas útil)
+    image: 'nodered/node-red:latest'
     container_name: node-red
-    
-    # Mapeia a porta padrão do Node-RED para uma porta no host
-    # Se você usar o Coolify, ele gerenciará a porta externa e o proxy reverso.
-    # Esta porta 1880 deve ser exposta no Coolify.
-    ports:
-      - "1880:1880"
-      
-    # Mapeia o volume /data para persistir fluxos, configurações e módulos instalados
-    volumes:
-      - node-red-data:/data
-      
-    # Reinicia o container automaticamente em caso de falha
     restart: unless-stopped
-
-# Define o volume persistente
+    volumes:
+      - 'node_red_data:/data'
+    env_file:
+      - .env
+    environment:
+      - 'NODE_RED_USERNAME=${NODE_RED_USERNAME}'
+      - 'NODE_RED_PASSWORD_HASH=${NODE_RED_PASSWORD_HASH}'
+    ports:
+      - '1880:1880'
 volumes:
-  node-red-data:
+  node_red_data: null
