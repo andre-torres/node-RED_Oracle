@@ -21,7 +21,7 @@ USER node-red
 
 # Copia o package.json e package-lock.json (se existirem) para o diretório de dados
 # Isso é útil se você usa um arquivo de lista de módulos
-COPY package.json package-lock.json /data/
+#COPY package.json package-lock.json /data/
 
 # Instala todos os módulos listados, incluindo o 'node-red-contrib-sap-hana' e suas dependências
 # O npm tentará compilar as dependências nativas neste ambiente rico
