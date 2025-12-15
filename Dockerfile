@@ -1,5 +1,5 @@
 
-FROM nodered/node-red:latest
+FROM nodered/node-red:latest-18-minimal
 
 USER root
 
