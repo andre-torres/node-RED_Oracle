@@ -22,7 +22,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN npm install --unsafe-perm
 
 #RUN npm install
-#RUN npm install async
+RUN npm install async
 
 # Define o ponto de entrada (já está definido na imagem base, mas é bom manter)
 CMD ["npm", "start", "--", "--userDir", "/data"]
