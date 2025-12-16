@@ -19,18 +19,17 @@ RUN rm -rf /var/lib/apt/lists/*
 
 
 #USER node-red
-RUN npm install 
-#--unsafe-perm
+RUN npm install --unsafe-perm
 RUN npm install async
 
 
 # ----------------------------------------
 # Oracle Instant Client (THICK MODE)
 # ----------------------------------------
-WORKDIR /opt/oracle
+#WORKDIR /opt/oracle
 
 # Copia a pasta inteira (já extraída)
-COPY oracle_client/instantclient_11_2 ./instantclient
+#COPY oracle_client/instantclient_11_2 ./instantclient
 
 # Permissões
 #RUN chmod -R 755 /opt/oracle/instantclient \
