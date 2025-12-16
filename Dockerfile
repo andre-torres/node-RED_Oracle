@@ -22,12 +22,12 @@ RUN rm -rf /var/lib/apt/lists/*
 # ----------------------------------------
 WORKDIR /opt/oracle
 
-RUN curl -L https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linux.x64-21.11.0.0.0dbru.zip \
-    -o instantclient.zip \
-    && bsdtar -xf instantclient.zip \
-    && rm instantclient.zip \
-    && ln -s instantclient_* instantclient
+# Copia a pasta inteira (já extraída)
+COPY oracle_client/instantclient_11_2 ./instantclient
 
+# Permissões
+RUN chmod -R 755 /opt/oracle/instantclient \
+    && ldconfig
     
     
 #USER node-red
