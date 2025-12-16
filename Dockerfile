@@ -1,6 +1,6 @@
 
-#FROM nodered/node-red:3.1.10-debian
-FROM nodered/node-red:latest
+FROM nodered/node-red:3.1.10-debian
+#FROM nodered/node-red:latest
 
 ENV NODE_ENV=production \
     NODE_OPTIONS=--max-old-space-size=2048
