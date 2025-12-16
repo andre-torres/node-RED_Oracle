@@ -7,14 +7,14 @@ ENV NODE_ENV=production \
 USER root
 
 RUN apt-get update && apt-get install -y \
-    ca-certificates \
+#    ca-certificates \
     curl \
     unzip \
     python3 \
     make \
     g++ \
-    libstdc++6 \
-    && rm -rf /var/lib/apt/lists/*
+    libstdc++6
+#    && rm -rf /var/lib/apt/lists/*
 
 USER node-red
 
