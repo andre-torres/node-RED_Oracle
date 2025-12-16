@@ -10,7 +10,7 @@ USER root
 #RUN apt-get update && apt-get install -y
 RUN apt-get install ca-certificates
 RUN apt-get install curl
-RUN apt-get install unzip
+#RUN apt-get install unzip
 RUN apt-get install python3
 RUN apt-get install make
 RUN apt-get install g++
@@ -24,7 +24,7 @@ WORKDIR /opt/oracle
 
 RUN curl -L https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linux.x64-21.11.0.0.0dbru.zip \
     -o instantclient.zip \
-    && unzip instantclient.zip \
+    && bsdtar -xf instantclient.zip \
     && rm instantclient.zip \
     && ln -s instantclient_* instantclient
 
