@@ -1,10 +1,16 @@
 
-FROM nodered/node-red:latest-18-minimal
+FROM nodered/node-red:3.1.10
 
+ENV NODE_ENV=production \
+    NODE_OPTIONS=--max-old-space-size=2048
+    
 USER root
 
-RUN npm install
-RUN npm install async
+RUN npm install --unsafe-perm \
+    node-red-contrib-sap-hana
+
+#RUN npm install
+#RUN npm install async
 
 # Define o ponto de entrada (já está definido na imagem base, mas é bom manter)
 CMD ["npm", "start", "--", "--userDir", "/data"]
