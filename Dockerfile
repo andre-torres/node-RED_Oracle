@@ -1,5 +1,5 @@
 
-FROM nodered/node-red:3.1.10-debian
+FROM nodered/node-red:latest-debian
 #FROM nodered/node-red:latest
 
 ENV NODE_ENV=production \
