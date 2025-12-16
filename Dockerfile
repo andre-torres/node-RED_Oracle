@@ -8,19 +8,18 @@ ENV NODE_ENV=production \
 USER root
 
 #RUN apt-get update && apt-get install -y
-#    ca-certificates \
-#    curl \
-#    unzip \
-#    python3 \
-#    make \
-#    g++ \
-#    libstdc++6
-#    && rm -rf /var/lib/apt/lists/*
+RUN apt-get install ca-certificates
+RUN apt-get install curl
+#RUN apt-get install unzip
+RUN apt-get install python3
+RUN apt-get install make
+RUN apt-get install g++
+RUN apt-get install ibstdc++6
+RUN rm -rf /var/lib/apt/lists/*
 
 #USER node-red
 
-RUN npm install --unsafe-perm \
-    node-red-contrib-sap-hana
+RUN npm install --unsafe-perm
 
 #RUN npm install
 #RUN npm install async
