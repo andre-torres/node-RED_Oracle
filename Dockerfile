@@ -19,7 +19,8 @@ RUN rm -rf /var/lib/apt/lists/*
 
 
 #USER node-red
-RUN npm install --unsafe-perm
+RUN npm install 
+#--unsafe-perm
 RUN npm install async
 
 
@@ -32,8 +33,8 @@ WORKDIR /opt/oracle
 COPY oracle_client/instantclient_11_2 ./instantclient
 
 # Permissões
-RUN chmod -R 755 /opt/oracle/instantclient \
-    && ldconfig
+#RUN chmod -R 755 /opt/oracle/instantclient \
+#    && ldconfig
 
     
 
