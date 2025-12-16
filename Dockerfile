@@ -14,7 +14,7 @@ RUN apt-get install curl
 RUN apt-get install python3
 RUN apt-get install make
 RUN apt-get install g++
-RUN apt-get install ibstdc++6
+RUN apt-get install libstdc++6
 RUN rm -rf /var/lib/apt/lists/*
 
 #USER node-red
