@@ -1,20 +1,17 @@
-version: '3.8'
-
+version: '3.7'
 services:
-  node-red-oracle:
-    # Usa o Dockerfile que acabamos de criar, na pasta atual (.)
-    build: .
-    image: node-red-oracle:latest
-    container_name: node-red-oracle
+  node-red:
+    image: 'nodered/node-red:latest'
+    container_name: node-red
     restart: unless-stopped
-    ports:
-      # Mapeia a porta do Node-RED
-      - "1882:1880"
     volumes:
-      # Mapeamento do volume de dados para persistência do Node-RED
-      - ./data:/data
+      - 'node_red_data:/data'
+    env_file:
+      - .env
     environment:
-      # Define a timezone para o container (opcional)
-      - TZ=America/Sao_Paulo
-      # Variáveis do Node-RED
-      - FLOWS=flows.json
+      - 'NODE_RED_USERNAME=${NODE_RED_USERNAME}'
+      - 'NODE_RED_PASSWORD_HASH=${NODE_RED_PASSWORD_HASH}'
+    ports:
+      - '1880:1880'
+volumes:
+  node_red_data: null

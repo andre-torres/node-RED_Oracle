@@ -1,40 +1,38 @@
-# Usa a imagem oficial do Node-RED baseada em Node.js (Alpine ou Debian, dependendo da versão)
-FROM nodered/node-red:latest-18
 
-# Define o diretório de trabalho
-WORKDIR /usr/src/node-red
+FROM nodered/node-red:3.1.10-debian
+#FROM nodered/node-red:latest
 
-# Variáveis de ambiente para o Oracle Instant Client
-ENV ORACLE_HOME=/opt/oracle/instantclient_12_2
-ENV LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
-ENV TNS_ADMIN=/usr/src/node-red/data
+ENV NODE_ENV=production \
+    NODE_OPTIONS=--max-old-space-size=2048
+    
+USER root
 
-# --- Etapa 1: Instalação das dependências e Instant Client ---
+#RUN apt-get update && apt-get install -y
+RUN apt-get install ca-certificates
+RUN apt-get install curl
+#RUN apt-get install unzip
+RUN apt-get install python3
+RUN apt-get install make
+RUN apt-get install g++
+RUN apt-get install libstdc++6
+RUN rm -rf /var/lib/apt/lists/*
 
-# Instala pacotes necessários (ajuste para a sua base, aqui assumimos Debian/Ubuntu)
-#RUN apk update
-    # Remove a limpeza de cache explícita com 'rm -rf' 
-    # e confia no '--no-cache' do 'apk add' para evitar problemas de permissão
-    # no processo de build.
-    #&& rm -rf /var/cache/apk/*
+# ----------------------------------------
+# Oracle Instant Client (THICK MODE)
+# ----------------------------------------
+WORKDIR /opt/oracle
 
-# Copia os arquivos do Instant Client para a imagem.
-#RUN mkdir -p $ORACLE_HOME
-#COPY oracle_client/instantclient_12_2/ $ORACLE_HOME/
+RUN curl -L https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linux.x64-21.11.0.0.0dbru.zip \
+    -o instantclient.zip \
+    && bsdtar -xf instantclient.zip \
+    && rm instantclient.zip \
+    && ln -s instantclient_* instantclient
 
-# Configura links simbólicos (necessário para o node-oracledb encontrar as bibliotecas)
-#RUN ln -s $ORACLE_HOME/libclntsh.so.* $ORACLE_HOME/libclntsh.so && \
-#    ln -s $ORACLE_HOME/libocci.so.* $ORACLE_HOME/libocci.so
+    
+    
+#USER node-red
+RUN npm install --unsafe-perm
+RUN npm install async
 
-# --- Etapa 2: Instalação do Nó Oracle (Exemplo) ---
-
-# Instala o nó node-oracledb, que usará o Instant Client instalado
-# Nota: Você pode precisar instalar outros nós Oracle, como node-red-contrib-oracledb
-#RUN npm install node-oracledb --unsafe-perm
-
-# Limpa o cache npm
-#RUN npm cache clean --force
-
-# Define o usuário padrão e o comando de inicialização do Node-RED
-USER node-red
-CMD ["npm", "start"]
+# Define o ponto de entrada (já está definido na imagem base, mas é bom manter)
+CMD ["npm", "start", "--", "--userDir", "/data"]
