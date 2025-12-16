@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     ports:
       # Mapeia a porta do Node-RED
-      - "1880:1880"
+      - "1882:1880"
     volumes:
       # Mapeamento do volume de dados para persistência do Node-RED
       - ./data:/data
