@@ -8,6 +8,20 @@ ENV NODE_ENV=production \
     
 USER root
 
+# ----------------------------------------
+# Oracle Instant Client (THICK MODE)
+# ----------------------------------------
+WORKDIR /opt/oracle
+
+# Copia a pasta inteira (já extraída)
+COPY oracle_client/instantclient_11_2 /opt/oracle/instantclient
+
+# Permissões
+#RUN chmod -R 755 /opt/oracle/instantclient \
+#    && ldconfig
+
+
+
 #RUN apt-get update && apt-get install -y
 RUN apt-get install ca-certificates
 RUN apt-get install curl
@@ -23,18 +37,6 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN npm install --unsafe-perm
 RUN npm install async
 
-
-# ----------------------------------------
-# Oracle Instant Client (THICK MODE)
-# ----------------------------------------
-WORKDIR /opt/oracle
-
-# Copia a pasta inteira (já extraída)
-COPY oracle_client/instantclient_11_2 /opt/oracle/instantclient
-
-# Permissões
-#RUN chmod -R 755 /opt/oracle/instantclient \
-#    && ldconfig
 
     
 
