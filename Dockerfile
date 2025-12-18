@@ -3,7 +3,8 @@ FROM nodered/node-red:latest-debian
 #FROM nodered/node-red:latest
 
 ENV NODE_ENV=production \
-    NODE_OPTIONS=--max-old-space-size=2048
+    NODE_OPTIONS=--max-old-space-size=2048 \
+    LD_LIBRARY_PATH="/opt/oracle/instantclient"
     
 USER root
 
@@ -26,10 +27,10 @@ RUN npm install async
 # ----------------------------------------
 # Oracle Instant Client (THICK MODE)
 # ----------------------------------------
-#WORKDIR /opt/oracle
+WORKDIR /opt/oracle
 
 # Copia a pasta inteira (já extraída)
-COPY oracle_client/instantclient_11_2 /data/instantclient
+COPY oracle_client/instantclient_11_2 /opt/oracle/instantclient
 
 # Permissões
 #RUN chmod -R 755 /opt/oracle/instantclient \
