@@ -29,7 +29,7 @@ RUN npm install async
 #WORKDIR /opt/oracle
 
 # Copia a pasta inteira (já extraída)
-#COPY oracle_client/instantclient_11_2 ./instantclient
+COPY oracle_client/instantclient_11_2 ./data/instantclient
 
 # Permissões
 #RUN chmod -R 755 /opt/oracle/instantclient \
