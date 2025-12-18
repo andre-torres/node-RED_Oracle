@@ -33,7 +33,7 @@ RUN apt-get install libstdc++6
 RUN rm -rf /var/lib/apt/lists/*
 
 
-#USER node-red
+USER node-red
 RUN npm install --unsafe-perm
 RUN npm install async
 
