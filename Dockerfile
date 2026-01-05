@@ -34,8 +34,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 
 #USER node-red
-#RUN npm install 
-#--unsafe-perm
+RUN npm install --unsafe-perm
 RUN npm install async
 
 
