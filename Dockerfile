@@ -32,6 +32,7 @@ RUN apt-get install g++
 RUN apt-get install libstdc++6
 RUN rm -rf /var/lib/apt/lists/*
 
+WORKDIR /usr/src/node-red
 
 #USER node-red
 RUN npm install --unsafe-perm
