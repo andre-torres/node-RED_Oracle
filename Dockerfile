@@ -1,6 +1,6 @@
 
-#FROM nodered/node-red:latest-debian
-FROM nodered/node-red:latest
+FROM nodered/node-red:latest-debian
+#FROM nodered/node-red:latest
 
 ENV NODE_ENV=production \
     NODE_OPTIONS=--max-old-space-size=2048 \
@@ -14,7 +14,7 @@ USER root
 WORKDIR /opt/oracle
 
 # Copia a pasta inteira (já extraída)
-COPY oracle_client/instantclient_11_2 /opt/oracle/instantclient
+#COPY oracle_client/instantclient_11_2 /opt/oracle/instantclient
 
 # Permissões
 #RUN chmod -R 755 /opt/oracle/instantclient \
